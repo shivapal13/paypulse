@@ -8,7 +8,6 @@ export class WebhookProcessor {
     connectionOptions: { host: string; port: number },
     private readonly httpPostFn: httpPostFn,
   ) {
-  
     this.worker = new Worker(
       'webhook-queue',
       async (job: Job) => {

@@ -7,14 +7,8 @@ import { PrismaSubscriptionRepository } from './infrastructure/database/reposito
 import { HealthController } from './presentation/controllers/health.controller';
 
 @Module({
-  imports:[],
-  controllers:[SubscriptionController,HealthController],
-  providers:[
-    PrismaService,
-    CreateSubscription,
-    StripePaymentClient,
-    PrismaSubscriptionRepository
-  ],
+  imports: [],
+  controllers: [SubscriptionController, HealthController],
+  providers: [PrismaService, CreateSubscription, StripePaymentClient, PrismaSubscriptionRepository],
 })
-
 export class AppModule {}
