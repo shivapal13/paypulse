@@ -1,4 +1,4 @@
-name: PayPulse CI/CD Quality Pipeline
+name: PayPulse CI/CD Pipeline
 
 on:
   push:
