@@ -13,7 +13,7 @@ describe('SubscriptionController', () => {
   let prisma: PrismaService;
 
   beforeAll(async () => {
-    mswServer.listen();
+    mswServer.listen({ onUnhandledRequest: 'bypass' });
 
     container = await new PostgreSqlContainer('postgres:16-alpine')
       .withDatabase('paypulse_e2e_test')
@@ -54,7 +54,7 @@ describe('SubscriptionController', () => {
     await container.stop();
   });
 
-  it('POST/subscriptions -> 400 bad request on invalid Dto payload', async () => {
+  it('POST /subscriptions -> 201 Created on valid request and Stripe success', async () => {
     const response = await request(app.getHttpServer())
       .post('/subscriptions')
       .send({
@@ -76,14 +76,14 @@ describe('SubscriptionController', () => {
     expect(dbSub?.planTier).toBe('PRO');
   });
 
-  it('POST/subscriptions -> Error when stripe card is declined by issuer', async () => {
+  it('POST /subscriptions -> Error when stripe card is declined by issuer', async () => {
     await request(app.getHttpServer())
-      .post('/subscription')
+      .post('/subscriptions')
       .send({
         userId: 'user-333',
         email: 'bob@gmail.com',
         planTier: 'BASIC',
-        paymentMethodId: 'pm-card_declined',
+        paymentMethodId: 'pm_card_declined',
       })
       .expect(500);
   });
