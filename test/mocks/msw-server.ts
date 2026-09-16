@@ -2,7 +2,6 @@ import { setupServer } from 'msw/node';
 import { rest } from 'msw';
 
 export const handlers = [
- 
   rest.post('https://api.stripe.com/v1/charges', async (req, res, ctx) => {
     const body = (await req.json()) as any;
 
@@ -23,6 +22,5 @@ export const handlers = [
     );
   }),
 ];
-
 
 export const mswServer = setupServer(...handlers);
