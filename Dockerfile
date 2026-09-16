@@ -3,6 +3,8 @@
 # ==========================================
 FROM node:20-alpine AS builder
 
+RUN apk add --no-cache openssl
+
 WORKDIR /app
 
 # Copy dependency manifests first for Docker Layer Caching
@@ -23,6 +25,8 @@ RUN npm run build
 # STAGE 2: Runner (Minimal Production Image)
 # ==========================================
 FROM node:20-alpine AS runner
+
+RUN apk add --no-cache openssl
 
 WORKDIR /app
 
