@@ -85,7 +85,7 @@ jobs:
     name: Deploy to Render Cloud
     needs: docker-build
     if: github.ref == 'ref/heads/main' && github.event_name == 'push'
-    runs_on: ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
      - name: Trigger Render Cloud      Deployment  
     run: |
