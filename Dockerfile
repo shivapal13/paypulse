@@ -28,15 +28,14 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 
-# Copy package manifests & install ONLY production dependencies
+# Copy package manifests, prisma schema & install production dependencies
 COPY package*.json ./
+COPY prisma ./prisma/
 RUN npm ci --only=production
+RUN npx prisma generate
 
 # Copy compiled JavaScript output from Stage 1
 COPY --from=builder /app/dist ./dist
-# Copy generated Prisma Client engines & schema from Stage 1
-COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
-COPY --from=builder /app/prisma ./prisma
 
 # Expose HTTP Port
 EXPOSE 3000
