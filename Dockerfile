@@ -42,4 +42,4 @@ COPY --from=builder /app/prisma ./prisma
 EXPOSE 3000
 
 # Start NestJS application in production mode
-CMD ["node", "dist/main.js"]
+CMD ["node", "dist/src/main.js"]

@@ -80,3 +80,14 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build Production Docker Image
         run: docker build -t paypulse:latest .
+
+  deploy:
+    name: Deploy to Render Cloud
+    needs: docker-build
+    if: github.ref == 'ref/heads/main' && github.event_name == 'push'
+    runs_on: ubuntu-latest
+    steps:
+     - name: Trigger Render Cloud      Deployment  
+    run: |
+      echo "Al 4 quality gates passed! Triggering Render deployment..." 
+      curl -X POST "${{secrets>RENDER_DEPLOY_HOOK_URL}}"    
