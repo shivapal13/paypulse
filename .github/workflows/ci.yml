@@ -1,4 +1,4 @@
-name: PayPulse CI/CD Pipeline
+name: PayPulse CI/CD Quality Pipeline
 
 on:
   push:
@@ -82,12 +82,12 @@ jobs:
         run: docker build -t paypulse:latest .
 
   deploy:
-    name: Deploy to Render Cloud
+    name:  5. Deploy to Render Cloud
     needs: docker-build
-    if: github.ref == 'ref/heads/main' && github.event_name == 'push'
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
-     - name: Trigger Render Cloud      Deployment  
-    run: |
-      echo "Al 4 quality gates passed! Triggering Render deployment..." 
-      curl -X POST "${{secrets>RENDER_DEPLOY_HOOK_URL}}"    
+      - name: Trigger Render Cloud Deployment
+        run: |
+          echo " All 4 quality gates passed! Triggering Render deployment..."
+          curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
